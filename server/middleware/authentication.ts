@@ -20,6 +20,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             next();
         });
     } else {
-        res.sendStatus(401);
+        res.sendStatus(401).json({error: "Invalid Credentials, try login again"});
     }
 }
