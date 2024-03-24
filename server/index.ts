@@ -1,11 +1,19 @@
-console.log("hi there starting server in typescirpt");
+import express from 'express';
+import authRoutes from "./route/auth"
+import databaseConnection from "./db/db";
+const app = express()
 
-const a: number = 8;
-console.log(a);
 
+const port = 3000;
+databaseConnection();
+app.use(express.json());
 
-function addNumbers (a: number, b: number){
-    return a + b;
-}
+app.use("/auth", authRoutes);
 
-console.log(addNumbers(1,2));
+app.get('/', function (req: any, res: any) {
+  res.send('Hello World')
+})
+
+app.listen(port, () => {
+    console.log("server running on localhost:3000");
+});
