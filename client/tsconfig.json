@@ -20,6 +20,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
+  "exclude": [
+    "node_modules",
+    "**/*.html" // Exclude HTML files
+  ],
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

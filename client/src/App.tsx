@@ -5,19 +5,22 @@ import Home from './pages/Home'
 import Signup from './pages/Singup'
 import Login from './pages/Login'
 import Appbar from './components/Appbar'
+import { MyAuthContext } from './context/authContext'
+import { useState } from 'react'
 
 function App() {
-  // const [count, setCount] = useState(0)
+  
+  const [user, setUser] = useState({});
 
   return (
-    <>
+    <MyAuthContext value={{user, setUser}}>
       <Appbar />
       <Routes>
-        <Route path='/home' element={<Home />}/>
+        <Route path='/' index element={<Home />}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/signup' element={<Signup />}/>
       </Routes>
-    </>
+    </MyAuthContext>
   )
 }
 

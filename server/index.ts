@@ -2,7 +2,10 @@ import express from 'express';
 import authRoutes from "./route/auth"
 import todoRoutes from "./route/todo"
 import databaseConnection from "./db/db";
-const app = express()
+import cors from "cors";
+const app = express();
+
+app.use(cors());
 
 
 const port = 3000;

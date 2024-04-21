@@ -19,7 +19,7 @@ export const signup = async (req: Request, res: Response) => {
         const token = jwt.sign({id: newUser._id}, SECRET, {expiresIn: '1h'});
         res.json({ message: 'User created successfully', token });
     } catch (error) {
-        console.error(error);
+        console.error("Error", error);
     }
 
 }
