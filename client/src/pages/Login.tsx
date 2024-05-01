@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/authContext";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import CryptoJS from 'crypto-js';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ const Login = () => {
     event.preventDefault();
 
     try {
+      // const secretKey: any = "priv";
+      // const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
+      // console.log(password, encrypted);
       const result = await axios.post("http://localhost:3000/auth/login", { username, password })
       localStorage.setItem("tokenID", result.data.token);
       console.log("Token set Successfully", {

@@ -1,16 +1,17 @@
 
 import CryptoJS from 'crypto-js';
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/authContext';
+// import dotenv from 'dotenv';
 
 const Signup: React.FC = () => {
-
   const navigate = useNavigate();
-
+  const { setUser }: any = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  // console.log("secret key", process.env.SECRET_KEY)
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
@@ -26,13 +27,13 @@ const Signup: React.FC = () => {
     console.log('Password:', password);
 
     try {
-      const secretKey = 'priv';
-      const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
+      // const secretKey: any = "priv";
+      // const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
 
-      const { data } = await axios.post("http://localhost:3000/auth/signup", {username, password: encrypted})
+      const { data } = await axios.post("http://localhost:3000/auth/signup", {username, password})
       localStorage.setItem("tokenID", data.token);
-      console.log("going to home page");
       console.log(data);
+      setUser({username: username});
       
       setTimeout(() => {
         navigate("/");
