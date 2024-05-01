@@ -34,23 +34,31 @@ const Home = () => {
         }
     }
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault();
+    const handleSubmit = async (tokenID: any) => {
+        // e.preventDefault();
         if (!title && !description) {
             console.log("write all things")
             return;
         }
-        console.log("Okay go on!");
+
+        try {
+            
+            const result = await axios.post("http://localhost:3000/user/todos", {title, description}, {headers: {"Authorization": "bearer " + tokenID}});
+            console.log(result);
+            setPlusClicked(false);
+            getData(tokenID);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handlePlus = async (e: any) => {
         e.preventDefault();
 
-
-
         setPlusClicked(!plusClicked);
         console.log(plusClicked);
     }
+    const tokenID = localStorage.getItem("tokenID");
 
 
     useEffect(() => {
@@ -72,8 +80,8 @@ const Home = () => {
         setMonthName(month);
     }, [])
     return (
-        <div className="bg-[#5871dc] p-8 h-full">
-            <div className="m-auto max-w-screen-lg bg-slate-200 rounded-lg h-[485px]">
+        <div className="bg-[#5871dc] p-8">
+            <div className="m-auto max-w-screen-lg bg-slate-200 rounded-lg">
                 <div className="upper_mandatory_section p-8">
                     <div className="flex items-center justify-between">
                         <p className="text-xl font-semibold text-slate-600 font-mono">{dayName}, {day} {monthName}</p>
@@ -103,7 +111,7 @@ const Home = () => {
                                         <textarea name="description" id="" cols="30" rows="10" className="bg-slate-200 w-full rounded-md p-2" onChange={(e) => { setDescription(e.target.value) }}></textarea>
                                     </div>
                                     <div className="flex justify-end">
-                                        <button className="bg-[#5871dc] rounded-md px-4 py-2 hover:bg-[#415ddd] duration-200 hover:text-white font-semibold" onClick={handleSubmit}>Save</button>
+                                        <button className="bg-[#5871dc] rounded-md px-4 py-2 hover:bg-[#415ddd] duration-200 hover:text-white font-semibold" onClick={() => handleSubmit(tokenID)}>Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -111,9 +119,9 @@ const Home = () => {
                     </div>
                     <p className="text-[#5c75e2] font-bold text-lg">{dataSize} Tasks</p>
                 </div>
-
+                <div className="bg-[#5871dc] absolute top-0 left-0 h-full w-full -z-10"></div>
                 <div className="px-8">
-                    <div className="tasks">
+                    <div className="tasks overflow-y-auto max-h-96 pb-4">
                         {
                             todoData.map((todo) => {
                                 return (

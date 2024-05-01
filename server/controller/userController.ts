@@ -11,7 +11,7 @@ export const signup = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ username });
         if (user) {
-            res.status(200).json({ message: "user is already registered, try Login" });
+            res.status(403).json({ message: "user is already registered, try Login" });
             return;
         }
         const newUser = new User({username, password});
@@ -33,4 +33,11 @@ export const login = async (req: Request, res: Response) => {
     } else {
       res.status(403).json({ message: 'Invalid username or password' });
     }
+}
+
+export const auther = async (req: Request, res: Response) => {
+    const tokenId = req.headers.authorization?.split(' ')[1];
+    const user = await User.findById(req.headers["userId"]);
+    // console.log(user);
+    res.json({ id: tokenId, user: user?.username});    
 }

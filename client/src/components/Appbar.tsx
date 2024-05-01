@@ -1,28 +1,42 @@
 import { useContext, useEffect } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import AuthContext from '../context/authContext'
+import axios from 'axios';
 
 const Appbar = () => {
 
   const { user, setUser }: any = useContext(AuthContext);
   const navigate = useNavigate();
-  // console.log(user);
-
-  // setTimeout(()=> {
-  //   setUser({ username: "hanuman" });
-  // }, 3000)
 
   const handleLogout = async () => {
     localStorage.clear();
-    setUser({username: ""});
+    setUser({ username: "" });
     navigate('/login');
   }
 
+  const getDetails = async () => {
+    const tokenId = localStorage.getItem("tokenID");
+    const result = await axios.get("http://localhost:3000/auth/me", {
+      headers: {
+        "Authorization": "bearer " + tokenId
+      }
+    });
+    console.log(result.data.user)
+    setUser(() => (
+      { username: result.data.user }));
+  }
+
   useEffect(() => {
-    
-  }, [user])
+    getDetails();
+    // if making user as dependency then it works infinitly.
+  }, [])
+
+  // useEffect(() => {
+  //   //have to call to "/me" to check and update user; 
+  //   console.log(user)
+  // }, [])
   return (
-    <nav className="flex items-center justify-between my-4 mx-8 font-mono">
+    <nav className="flex items-center justify-between py-4 px-8 font-mono bg-white z-10">
       <NavLink to="/">
         <p className="text-xl font-bold">Intersting Todo</p>
       </NavLink>

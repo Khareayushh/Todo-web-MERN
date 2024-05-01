@@ -30,13 +30,13 @@ const Signup: React.FC = () => {
       const encrypted = CryptoJS.AES.encrypt(password, secretKey).toString();
 
       const { data } = await axios.post("http://localhost:3000/auth/signup", {username, password: encrypted})
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("tokenID", data.token);
       console.log("going to home page");
       console.log(data);
       
       setTimeout(() => {
-        navigate("/home");
-      }, 5000);
+        navigate("/");
+      }, 1000);
       
     } catch (error) {
       console.error(error);

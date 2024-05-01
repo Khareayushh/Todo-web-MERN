@@ -25,8 +25,7 @@ const Login = () => {
       const result = await axios.post("http://localhost:3000/auth/login", { username, password })
       localStorage.setItem("tokenID", result.data.token);
       console.log("Token set Successfully", {
-        username,
-        password
+        username
       });
       setUser({ username: username });
       navigate("/");

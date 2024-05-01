@@ -3,7 +3,7 @@ import { User, Todos } from "../modal/todoModal"
 
 export const getAllTodos = async (req: Request, res: Response) => {
     const userId = req.headers["userId"]; //not having this will be handled by authenticate middleware.
-
+    // console.log("getAll", userId);
     try {
         const userTodos = await Todos.find({ userId });
         res.status(200).json(userTodos);

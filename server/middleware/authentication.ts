@@ -17,7 +17,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             }
 
             req.headers["userId"] = payload.id;
-            // console.log(payload);
+            // console.log(req.headers["userId"]);
             next();
         });
     } else {

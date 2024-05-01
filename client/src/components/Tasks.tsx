@@ -10,7 +10,7 @@ const Tasks = ({_id, description, title, done}: any) => {
         <div className="flex gap-4 mb-2 items-center" key={_id}>
             <span className={`w-4 h-4 content[""] border border-black rounded-full cursor-pointer ${isActive && 'bg-blue-400 duration-300'}`} onClick={() => setIsActive(!isActive)}></span>
             <div className={`${isActive && 'text-slate-400 duration-300'}`}>
-                <div className='grid grid-cols-[200px_500px] gap-4 items-center'>
+                <div className='grid grid-cols-[300px_400px] gap-4 items-center'>
                     <p className="truncate font-semibold text-xl">{title}</p>
                     <p className="truncate text-lg"> {description}</p>
                 </div>
